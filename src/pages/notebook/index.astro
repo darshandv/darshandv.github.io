@@ -1,0 +1,74 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import EntryRow from '../../components/EntryRow.astro';
+import { url } from '../../lib/utils';
+
+const entries = (await getCollection('notebook', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const byYear = new Map<number, typeof entries>();
+for (const e of entries) {
+  const y = e.data.date.getUTCFullYear();
+  if (!byYear.has(y)) byYear.set(y, []);
+  byYear.get(y)!.push(e);
+}
+---
+
+<Base
+  title="Notebook"
+  description="A public notebook — technical deep dives, fragments, life notes, and links, in the order they were thought."
+>
+  <div class="container">
+    <header class="page-head">
+      <p class="meta">The public mind</p>
+      <h1>Notebook</h1>
+      <p class="lede">
+        Deep dives, fragments, life, links — in the order I think them. Unpolished on
+        purpose.
+      </p>
+    </header>
+
+    {
+      [...byYear.entries()].map(([year, list]) => (
+        <section class="year">
+          <h2 class="meta year-label">{year}</h2>
+          <div class="rows">
+            {list.map((entry) => (
+              <EntryRow
+                href={url(`/notebook/${entry.id}/`)}
+                title={entry.data.title}
+                date={entry.data.date}
+                kind={entry.data.kind}
+                summary={entry.data.summary}
+              />
+            ))}
+          </div>
+        </section>
+      ))
+    }
+  </div>
+</Base>
+
+<style>
+  .page-head {
+    padding-block: clamp(3rem, 8vh, 5rem) 2.5rem;
+  }
+  .page-head h1 {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    margin-bottom: 0.5rem;
+  }
+  .lede {
+    color: var(--ink-2);
+    font-size: 1.08rem;
+    max-width: 58ch;
+  }
+  .year {
+    margin-bottom: 2.6rem;
+  }
+  .year-label {
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+</style>

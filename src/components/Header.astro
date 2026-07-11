@@ -1,0 +1,97 @@
+---
+import { site } from '../data/site';
+import { url } from '../lib/utils';
+
+const nav = [
+  { label: 'work', href: url('/work/') },
+  { label: 'bets', href: url('/bets/') },
+  { label: 'notebook', href: url('/notebook/') },
+  { label: 'essays', href: url('/essays/') },
+  { label: 'about', href: url('/about/') },
+];
+const current = Astro.url.pathname;
+---
+
+<header class="site-header container">
+  <a class="wordmark" href={url('/')} aria-label={site.name}>
+    {site.wordmark}<span class="cursor">_</span>
+  </a>
+  <nav aria-label="Primary">
+    {
+      nav.map((item) => (
+        <a href={item.href} aria-current={current.startsWith(item.href) ? 'page' : undefined}>
+          {item.label}
+        </a>
+      ))
+    }
+    <button id="theme-toggle" type="button" aria-label="Toggle color theme" title="toggle theme">
+      <span class="swatch" aria-hidden="true"></span>
+    </button>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 1.4rem;
+    gap: 1rem;
+  }
+  .wordmark {
+    font-family: var(--font-mono);
+    font-weight: 640;
+    font-size: 1.05rem;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  .wordmark:hover {
+    text-decoration: none;
+  }
+  nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.7rem, 2.5vw, 1.5rem);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+  }
+  nav a {
+    color: var(--ink-2);
+  }
+  nav a:hover,
+  nav a[aria-current='page'] {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  #theme-toggle {
+    display: grid;
+    place-items: center;
+    background: none;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    color: var(--ink-2);
+    line-height: 1;
+    padding: 0.38em;
+    cursor: pointer;
+  }
+  .swatch {
+    width: 0.8em;
+    height: 0.8em;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    background: linear-gradient(90deg, currentColor 50%, transparent 50%);
+  }
+  #theme-toggle:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+</style>
+
+<script is:inline>
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem('theme', next);
+  });
+</script>

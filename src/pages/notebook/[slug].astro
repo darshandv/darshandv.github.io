@@ -1,0 +1,46 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { url, formatDate, isoDate } from '../../lib/utils';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('notebook', ({ data }) => !data.draft);
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { title, date, kind, summary } = entry.data;
+---
+
+<Base title={title} description={summary}>
+  <article class="prose-page">
+    <header class="entry-head">
+      <p class="meta">
+        <a href={url('/notebook/')}>notebook</a><span class="sep">/</span>{kind}
+        <span class="sep">·</span>
+        <time datetime={isoDate(date)}>{formatDate(date)}</time>
+      </p>
+      <h1>{title}</h1>
+    </header>
+    <div class="prose">
+      <Content />
+    </div>
+    <p class="back meta"><a href={url('/notebook/')}>← notebook</a></p>
+  </article>
+</Base>
+
+<style>
+  .entry-head {
+    padding-block: clamp(3rem, 8vh, 5rem) 1.5rem;
+  }
+  .entry-head h1 {
+    font-size: clamp(1.9rem, 4.5vw, 2.7rem);
+    margin-top: 0.8rem;
+  }
+  .back {
+    margin-top: 3.5rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--line);
+  }
+</style>

@@ -1,0 +1,70 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import BetCard from '../components/BetCard.astro';
+
+const all = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const active = all.filter((p) => p.data.status !== 'archived');
+const archived = all.filter((p) => p.data.status === 'archived');
+---
+
+<Base
+  title="Bets"
+  description="Side projects as bets on where computing is going — AI agents, networks built from scratch, published research."
+>
+  <div class="container">
+    <header class="page-head">
+      <p class="meta">Projects, framed honestly</p>
+      <h1>Bets</h1>
+      <p class="lede">
+        Side projects are how I place bets on where computing is going. Some become
+        software. Some become theses. All of them teach me something the day job can't.
+      </p>
+    </header>
+
+    <div class="bet-grid">
+      {active.map((entry) => <BetCard entry={entry} />)}
+    </div>
+
+    {
+      archived.length > 0 && (
+        <section class="archive">
+          <h2 class="meta head">Archive</h2>
+          <div class="bet-grid">
+            {archived.map((entry) => (
+              <BetCard entry={entry} />
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+</Base>
+
+<style>
+  .page-head {
+    padding-block: clamp(3rem, 8vh, 5rem) 2.5rem;
+  }
+  .page-head h1 {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    margin-bottom: 0.5rem;
+  }
+  .lede {
+    color: var(--ink-2);
+    font-size: 1.08rem;
+    max-width: 58ch;
+  }
+  .bet-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+    gap: 1.2rem;
+  }
+  .archive {
+    margin-top: 3.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--line);
+  }
+  .archive .head {
+    margin-bottom: 1.2rem;
+  }
+</style>

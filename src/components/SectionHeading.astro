@@ -1,0 +1,16 @@
+---
+interface Props {
+  num: string;
+  title: string;
+  moreHref?: string;
+  moreLabel?: string;
+}
+const { num, title, moreHref, moreLabel } = Astro.props;
+---
+
+<div class="section-heading">
+  <span class="num">{num}</span>
+  <h2>{title}</h2>
+  <span class="rule" aria-hidden="true"></span>
+  {moreHref && <a class="more" href={moreHref}>{moreLabel ?? 'all'} →</a>}
+</div>

@@ -1,0 +1,22 @@
+---
+import { formatDate, isoDate } from '../lib/utils';
+
+interface Props {
+  href: string;
+  title: string;
+  date: Date;
+  kind?: string;
+  summary?: string;
+}
+const { href, title, date, kind, summary } = Astro.props;
+---
+
+<a class="row-item" href={href}>
+  <p class="meta">
+    <time datetime={isoDate(date)}>{formatDate(date)}</time>
+    {kind && <span class="sep">·</span>}
+    {kind}
+  </p>
+  <h3 class="row-title">{title}</h3>
+  {summary && <p class="row-sub">{summary}</p>}
+</a>

@@ -1,0 +1,59 @@
+---
+import { getCollection } from 'astro:content';
+import { formatDate, isoDate } from '../lib/utils';
+
+interface Props {
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
+
+const [now] = await getCollection('now');
+const { updated, building, thinking, reading } = now.data;
+const rows: [string, readonly string[]][] = [
+  ['building', building],
+  ['thinking', thinking],
+  ['reading', reading],
+];
+---
+
+<div class="now">
+  {
+    rows.map(([label, items]) => (
+      <div class="now-row">
+        <span class="meta label">{label}</span>
+        <span class="items">{compact ? items[0] : items.join(' · ')}</span>
+      </div>
+    ))
+  }
+  <p class="meta updated">
+    updated <time datetime={isoDate(updated)}>{formatDate(updated)}</time>
+  </p>
+</div>
+
+<style>
+  .now {
+    font-size: 0.98rem;
+  }
+  .now-row {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    gap: 1rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--line-faint);
+  }
+  .label {
+    color: var(--accent);
+  }
+  .items {
+    color: var(--ink-2);
+  }
+  .updated {
+    margin-top: 0.9rem;
+  }
+  @media (max-width: 480px) {
+    .now-row {
+      grid-template-columns: 6rem 1fr;
+      gap: 0.6rem;
+    }
+  }
+</style>

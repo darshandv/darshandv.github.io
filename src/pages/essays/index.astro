@@ -1,0 +1,64 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import EntryRow from '../../components/EntryRow.astro';
+import { url } from '../../lib/utils';
+
+const essays = (await getCollection('essays', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<Base
+  title="Essays"
+  description="Short, opinionated, personal essays by Darshan D Vishwanath. Written rarely, meant to last."
+>
+  <div class="container">
+    <header class="page-head">
+      <p class="meta">Rare by design</p>
+      <h1>Essays</h1>
+      <p class="lede">Short, opinionated, personal. Written rarely, meant to last.</p>
+    </header>
+
+    {
+      essays.length > 0 ? (
+        <div class="rows">
+          {essays.map((entry) => (
+            <EntryRow
+              href={url(`/essays/${entry.id}/`)}
+              title={entry.data.title}
+              date={entry.data.date}
+              summary={entry.data.summary}
+            />
+          ))}
+        </div>
+      ) : (
+        <p class="meta empty">
+          essays are rare here on purpose. the first one is being written.
+        </p>
+      )
+    }
+  </div>
+</Base>
+
+<style>
+  .page-head {
+    padding-block: clamp(3rem, 8vh, 5rem) 2.5rem;
+  }
+  .page-head h1 {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    margin-bottom: 0.5rem;
+  }
+  .lede {
+    color: var(--ink-2);
+    font-size: 1.08rem;
+    max-width: 58ch;
+  }
+  .empty {
+    text-align: center;
+    padding: 5rem 0;
+    border-block: 1px solid var(--line);
+    text-transform: none;
+    letter-spacing: 0.05em;
+  }
+</style>

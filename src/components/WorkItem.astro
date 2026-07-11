@@ -1,0 +1,72 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'work'>;
+  compact?: boolean;
+}
+const { entry, compact = false } = Astro.props;
+const { company, role, location, period, headline, highlights, tags, note } = entry.data;
+---
+
+<article class="work-item">
+  <p class="meta">
+    {period}<span class="sep">·</span>{location}
+  </p>
+  <h3 class="row-title">
+    {company} <span class="role">— {role}</span>
+  </h3>
+  <p class="headline">{headline}</p>
+  {
+    !compact && (
+      <ul class="highlights">
+        {highlights.map((h) => (
+          <li>{h}</li>
+        ))}
+      </ul>
+    )
+  }
+  {!compact && note && <p class="meta note">{note}</p>}
+  {
+    tags.length > 0 && (
+      <div class="chips">
+        {tags.map((t) => (
+          <span class="chip">{t}</span>
+        ))}
+      </div>
+    )
+  }
+</article>
+
+<style>
+  .work-item {
+    padding: 1.7rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .role {
+    color: var(--ink-2);
+    font-weight: 480;
+  }
+  .headline {
+    font-weight: 560;
+    max-width: var(--measure);
+    margin-bottom: 0.7em;
+  }
+  .highlights {
+    margin: 0 0 1em;
+    padding-left: 1.15em;
+    color: var(--ink-2);
+    max-width: var(--measure);
+  }
+  .highlights li {
+    margin-bottom: 0.4em;
+  }
+  .highlights li::marker {
+    color: var(--accent);
+  }
+  .note {
+    text-transform: none;
+    letter-spacing: 0.03em;
+    margin-bottom: 1em;
+  }
+</style>

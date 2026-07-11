@@ -1,0 +1,52 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { url, formatDate, isoDate } from '../../lib/utils';
+
+export async function getStaticPaths() {
+  const essays = await getCollection('essays', ({ data }) => !data.draft);
+  return essays.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { title, date, summary } = entry.data;
+---
+
+<Base title={title} description={summary}>
+  <article class="prose-page">
+    <header class="entry-head">
+      <p class="meta">
+        <a href={url('/essays/')}>essay</a>
+        <span class="sep">·</span>
+        <time datetime={isoDate(date)}>{formatDate(date)}</time>
+      </p>
+      <h1>{title}</h1>
+      <hr class="drop-rule" />
+    </header>
+    <div class="prose">
+      <Content />
+    </div>
+    <p class="back meta"><a href={url('/essays/')}>← essays</a></p>
+  </article>
+</Base>
+
+<style>
+  .entry-head {
+    padding-block: clamp(3rem, 8vh, 5rem) 0.5rem;
+  }
+  .entry-head h1 {
+    font-size: clamp(2.1rem, 5vw, 3rem);
+    margin-top: 0.8rem;
+  }
+  .drop-rule {
+    width: 4rem;
+    border-top: 2px solid var(--accent);
+    margin: 1.8rem 0;
+  }
+  .back {
+    margin-top: 3.5rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--line);
+  }
+</style>

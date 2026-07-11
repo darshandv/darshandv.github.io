@@ -1,0 +1,73 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import WorkItem from '../components/WorkItem.astro';
+
+const work = (await getCollection('work')).sort(
+  (a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf()
+);
+---
+
+<Base
+  title="Work"
+  description="The shipped record — systems Darshan D Vishwanath has built that are running in the world right now: Apple retail platform, Samsung Night Mode, TensorFlow Lite Micro, and more."
+>
+  <div class="container">
+    <header class="page-head">
+      <p class="meta">The shipped record</p>
+      <h1>Work</h1>
+      <p class="lede">Systems I've built that are running in the world right now.</p>
+    </header>
+
+    <div class="rows-top">
+      {work.map((entry) => <WorkItem entry={entry} />)}
+    </div>
+
+    <section class="credentials">
+      <h2 class="meta head">Credentials</h2>
+      <ul class="meta list">
+        <li>MS Computer Science, University of Southern California — GPA 3.9 / 4</li>
+        <li>BTech Computer Science, NIT Karnataka — GPA 3.9 / 4</li>
+        <li>
+          Published: DRIP-Caps, capsule networks for sub-retinal fluid segmentation —
+          Medical &amp; Biological Engineering &amp; Computing (Springer, 2021)
+        </li>
+        <li>KCET rank 86 of ~200,000 · JEE Mains rank 6,695 of ~1.2M</li>
+      </ul>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .page-head {
+    padding-block: clamp(3rem, 8vh, 5rem) 2.5rem;
+  }
+  .page-head h1 {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    margin-bottom: 0.5rem;
+  }
+  .lede {
+    color: var(--ink-2);
+    font-size: 1.08rem;
+    max-width: 58ch;
+  }
+  .rows-top {
+    border-top: 1px solid var(--line);
+  }
+  .credentials {
+    margin-top: 3.5rem;
+  }
+  .credentials .head {
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .credentials .list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-transform: none;
+    letter-spacing: 0.03em;
+    line-height: 2;
+    font-size: 0.84rem;
+  }
+</style>

@@ -1,0 +1,128 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import WorkItem from '../components/WorkItem.astro';
+import BetCard from '../components/BetCard.astro';
+import EntryRow from '../components/EntryRow.astro';
+import NowReadout from '../components/NowReadout.astro';
+import { site } from '../data/site';
+import { url } from '../lib/utils';
+
+const work = (await getCollection('work', ({ data }) => data.featured))
+  .sort((a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf())
+  .slice(0, 3);
+
+const bets = (await getCollection('projects', ({ data }) => data.featured))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 2);
+
+const notebook = (await getCollection('notebook', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 4);
+
+const essays = (await getCollection('essays', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const latestEssay = essays[0];
+---
+
+<Base>
+  <section class="hero">
+    <div class="container">
+      <p class="meta kicker fade-up">{site.name}</p>
+      <h1 class="fade-up d1">{site.identity}</h1>
+      <p class="lede fade-up d2">
+        Camera pipelines running on millions of Galaxy phones. Planet-scale retail
+        infrastructure at Apple. Bets on agents that use the internet the way people do.
+        I work where software meets its limits — this site is the record of that work,
+        and of the thinking behind it.
+      </p>
+      <p class="meta status fade-up d3">{site.statusLine}</p>
+    </div>
+  </section>
+
+  <section class="section container">
+    <SectionHeading num="01" title="Shipped" moreHref={url('/work/')} moreLabel="the record" />
+    <div class="rows-top">
+      {work.map((entry) => <WorkItem entry={entry} compact />)}
+    </div>
+  </section>
+
+  <section class="section container">
+    <SectionHeading num="02" title="Bets" moreHref={url('/bets/')} moreLabel="all bets" />
+    <div class="bet-grid">
+      {bets.map((entry) => <BetCard entry={entry} />)}
+    </div>
+  </section>
+
+  <section class="section container">
+    <SectionHeading num="03" title="Notebook" moreHref={url('/notebook/')} moreLabel="all entries" />
+    <div class="rows">
+      {
+        latestEssay && (
+          <EntryRow
+            href={url(`/essays/${latestEssay.id}/`)}
+            title={latestEssay.data.title}
+            date={latestEssay.data.date}
+            kind="essay"
+            summary={latestEssay.data.summary}
+          />
+        )
+      }
+      {
+        notebook.map((entry) => (
+          <EntryRow
+            href={url(`/notebook/${entry.id}/`)}
+            title={entry.data.title}
+            date={entry.data.date}
+            kind={entry.data.kind}
+            summary={entry.data.summary}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section container">
+    <SectionHeading num="04" title="Now" moreHref={url('/about/')} moreLabel="about me" />
+    <NowReadout compact />
+  </section>
+</Base>
+
+<style>
+  .hero {
+    padding-block: clamp(4rem, 12vh, 8rem) clamp(2rem, 5vh, 3rem);
+    background-image:
+      linear-gradient(var(--line-faint) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-faint) 1px, transparent 1px);
+    background-size: 72px 72px;
+    -webkit-mask-image: linear-gradient(#000 55%, transparent);
+    mask-image: linear-gradient(#000 55%, transparent);
+  }
+  .kicker {
+    margin-bottom: 1.4rem;
+    color: var(--ink-2);
+  }
+  .hero h1 {
+    max-width: 16ch;
+    margin-bottom: 1.2rem;
+  }
+  .lede {
+    max-width: 58ch;
+    font-size: 1.12rem;
+    color: var(--ink-2);
+    margin-bottom: 2.2rem;
+  }
+  .status {
+    color: var(--ink-2);
+  }
+  .rows-top {
+    border-top: 1px solid var(--line);
+  }
+  .bet-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+    gap: 1.2rem;
+  }
+</style>

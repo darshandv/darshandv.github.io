@@ -1,0 +1,96 @@
+---
+import Base from '../layouts/Base.astro';
+import NowReadout from '../components/NowReadout.astro';
+import { site } from '../data/site';
+
+const story = [
+  `I grew up in Karnataka, India. The first time I understood scale, it was as a
+   number with my name next to it: rank 86 among two hundred thousand students in
+   the state entrance exam. At NIT Karnataka I studied computer science and picked
+   up the conviction that still drives me — the whole stack is knowable, from the
+   transistor to the product.`,
+  `By my final year I was doing research: a capsule-network architecture for
+   segmenting retinal fluid that cut trainable parameters by half compared to
+   U-Net. It was published in Springer's Medical & Biological Engineering &
+   Computing, and it taught me that a good constraint — fewer parameters, less
+   compute — is a better teacher than a big budget.`,
+  `At Samsung R&D I spent a year and a half inside phone cameras. The Night Mode
+   multiframe pipeline I helped architect — C++, Neon SIMD, GPU shared memory,
+   quantized models on NPUs — runs on millions of Galaxy devices. Shipping to
+   hardware is a different sport: latency is physics, and there is no patch
+   Tuesday for a camera.`,
+  `I moved to the US for a Master's at USC, spent a summer at Skyworks making
+   TensorFlow Lite for Microcontrollers faster (and upstreaming the fixes), and
+   in 2024 joined Apple in Austin. Today I build the retail platform behind every
+   Apple Store on the planet — event-driven microservices on Kafka and Temporal,
+   holding a 99.99% uptime bar.`,
+  `The thread through all of it: I like working where software meets its limits —
+   silicon, latency, scale. On my own time I place bets on what comes next, mostly
+   on agents. I'm building toward founding something; the bets are how I find out
+   what. This site is where I keep the record honest.`,
+];
+---
+
+<Base
+  title="About"
+  description="The story of Darshan D Vishwanath — Karnataka to NIT-K to Samsung to USC to Apple, and what comes next."
+>
+  <div class="prose-page">
+    <header class="page-head">
+      <p class="meta">The person</p>
+      <h1>About</h1>
+    </header>
+
+    <div class="prose">
+      {story.map((p) => <p>{p}</p>)}
+    </div>
+
+    <section class="block">
+      <h2 class="meta head">Now</h2>
+      <NowReadout />
+    </section>
+
+    <section class="block">
+      <h2 class="meta head">Contact</h2>
+      <p>
+        The fastest way is email: <a href={`mailto:${site.email}`}>{site.email}</a>.
+        I'm also on
+        {site.socials.map((s, i) => (
+          <>
+            <a href={s.url} rel="me noopener">{s.label}</a>{i < site.socials.length - 1 ? ' and ' : '.'}
+          </>
+        ))}
+      </p>
+    </section>
+
+    <section class="block">
+      <h2 class="meta head">Colophon</h2>
+      <p class="meta colophon-text">
+        built by hand with astro · set in inter &amp; jetbrains mono · hosted on
+        github pages · no trackers, no analytics, nothing watching you read
+      </p>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .page-head {
+    padding-block: clamp(3rem, 8vh, 5rem) 2rem;
+  }
+  .page-head h1 {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    margin: 0.4rem 0 0;
+  }
+  .block {
+    margin-top: 3.2rem;
+  }
+  .block .head {
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .colophon-text {
+    text-transform: none;
+    letter-spacing: 0.04em;
+    line-height: 1.9;
+  }
+</style>

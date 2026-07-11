@@ -1,0 +1,76 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'projects'>;
+}
+const { entry } = Astro.props;
+const { title, year, status, bet, outcome, stack, links } = entry.data;
+---
+
+<article class:list={['card', { archived: status === 'archived' }]}>
+  <p class="meta">
+    {year}<span class="sep">·</span>{status}
+  </p>
+  <h3>{title}</h3>
+  <p class="bet">
+    <span class="bet-label">The bet:</span>
+    {bet}
+  </p>
+  <p class="outcome">{outcome}</p>
+  {
+    stack.length > 0 && (
+      <div class="chips">
+        {stack.map((s) => (
+          <span class="chip">{s}</span>
+        ))}
+      </div>
+    )
+  }
+  {
+    links.length > 0 && (
+      <p class="links meta">
+        {links.map((l) => (
+          <a href={l.url} rel="noopener">
+            {l.label} ↗
+          </a>
+        ))}
+      </p>
+    )
+  }
+</article>
+
+<style>
+  h3 {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+  .bet {
+    font-size: 1.02rem;
+    font-weight: 560;
+    margin: 0;
+  }
+  .bet-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-right: 0.5em;
+  }
+  .outcome {
+    color: var(--ink-2);
+    margin: 0;
+  }
+  .links {
+    margin: 0;
+    text-transform: none;
+  }
+  .links a {
+    color: var(--accent);
+    margin-right: 1.2em;
+  }
+  .archived {
+    opacity: 0.6;
+  }
+</style>
