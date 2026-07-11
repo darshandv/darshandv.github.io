@@ -23,7 +23,8 @@ const projects = defineCollection({
     title: z.string(),
     year: z.string(),
     status: z.enum(['shipped', 'exploring', 'published', 'archived']),
-    bet: z.string(),
+    tier: z.enum(['bet', 'workshop']).default('workshop'),
+    bet: z.string().optional(),
     outcome: z.string(),
     stack: z.array(z.string()).max(6).default([]),
     links: z.array(z.object({ label: z.string(), url: z.string().url() })).default([]),
@@ -32,8 +33,8 @@ const projects = defineCollection({
   }),
 });
 
-const notebook = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/notebook' }),
+const unfinished = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/unfinished' }),
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),
@@ -63,4 +64,4 @@ const now = defineCollection({
   }),
 });
 
-export const collections = { work, projects, notebook, essays, now };
+export const collections = { work, projects, unfinished, essays, now };

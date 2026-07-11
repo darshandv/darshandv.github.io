@@ -2,8 +2,8 @@
 title: DRIP-Caps — Published Research
 year: "2021"
 status: published
-bet: Capsule networks can beat U-Net at medical segmentation with a fraction of the parameters.
-outcome: A novel architecture (dilated convolutions, residual connections, inception blocks, capsule pooling) for sub-retinal fluid segmentation with 54.21% fewer trainable parameters than U-Net — published in Medical & Biological Engineering & Computing (Springer).
+tier: workshop
+outcome: A wager that capsule networks could beat U-Net at medical segmentation with a fraction of the parameters — it paid off. 54.21% fewer trainable parameters for sub-retinal fluid segmentation, published in Medical & Biological Engineering & Computing (Springer).
 stack: [Capsule Networks, PyTorch, Medical Imaging]
 links:
   - label: Paper

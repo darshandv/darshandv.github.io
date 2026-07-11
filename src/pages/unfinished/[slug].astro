@@ -4,7 +4,7 @@ import Base from '../../layouts/Base.astro';
 import { url, formatDate, isoDate } from '../../lib/utils';
 
 export async function getStaticPaths() {
-  const entries = await getCollection('notebook', ({ data }) => !data.draft);
+  const entries = await getCollection('unfinished', ({ data }) => !data.draft);
   return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
 }
 
@@ -17,7 +17,7 @@ const { title, date, kind, summary } = entry.data;
   <article class="prose-page">
     <header class="entry-head">
       <p class="meta">
-        <a href={url('/notebook/')}>notebook</a><span class="sep">/</span>{kind}
+        <a href={url('/unfinished/')}>unfinished</a><span class="sep">/</span>{kind}
         <span class="sep">·</span>
         <time datetime={isoDate(date)}>{formatDate(date)}</time>
       </p>
@@ -26,7 +26,7 @@ const { title, date, kind, summary } = entry.data;
     <div class="prose">
       <Content />
     </div>
-    <p class="back meta"><a href={url('/notebook/')}>← notebook</a></p>
+    <p class="back meta"><a href={url('/unfinished/')}>← unfinished</a></p>
   </article>
 </Base>
 

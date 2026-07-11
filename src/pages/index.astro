@@ -13,11 +13,11 @@ const work = (await getCollection('work', ({ data }) => data.featured))
   .sort((a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf())
   .slice(0, 3);
 
-const bets = (await getCollection('projects', ({ data }) => data.featured))
+const bets = (await getCollection('projects', ({ data }) => data.featured && data.tier === 'bet'))
   .sort((a, b) => a.data.order - b.data.order)
   .slice(0, 2);
 
-const notebook = (await getCollection('notebook', ({ data }) => !data.draft))
+const unfinished = (await getCollection('unfinished', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 4);
 
@@ -33,9 +33,10 @@ const latestEssay = essays[0];
       <p class="meta kicker fade-up">{site.name}</p>
       <h1 class="fade-up d1">{site.identity}</h1>
       <p class="lede fade-up d2">
-        Camera pipelines running on millions of Galaxy phones. Planet-scale retail
-        infrastructure at Apple. Bets on agents that use the internet the way people do.
-        I work where software meets its limits — this site is the record of that work,
+        Sub-millisecond camera kernels running on millions of Galaxy phones. Retail
+        systems at Apple serving customers in every country — where peaks, availability,
+        and reliability are the physics. Bets on agents and local AI. I work where
+        software meets its limits, at both ends — this site is the record of that work,
         and of the thinking behind it.
       </p>
       <p class="meta status fade-up d3">{site.statusLine}</p>
@@ -57,7 +58,7 @@ const latestEssay = essays[0];
   </section>
 
   <section class="section container">
-    <SectionHeading num="03" title="Notebook" moreHref={url('/notebook/')} moreLabel="all entries" />
+    <SectionHeading num="03" title="Unfinished" moreHref={url('/unfinished/')} moreLabel="the inner track" />
     <div class="rows">
       {
         latestEssay && (
@@ -71,9 +72,9 @@ const latestEssay = essays[0];
         )
       }
       {
-        notebook.map((entry) => (
+        unfinished.map((entry) => (
           <EntryRow
-            href={url(`/notebook/${entry.id}/`)}
+            href={url(`/unfinished/${entry.id}/`)}
             title={entry.data.title}
             date={entry.data.date}
             kind={entry.data.kind}
@@ -105,7 +106,8 @@ const latestEssay = essays[0];
     color: var(--ink-2);
   }
   .hero h1 {
-    max-width: 16ch;
+    font-size: clamp(2.2rem, 5.2vw, 3.55rem);
+    max-width: 22ch;
     margin-bottom: 1.2rem;
   }
   .lede {

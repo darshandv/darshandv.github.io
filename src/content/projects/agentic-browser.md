@@ -1,9 +1,10 @@
 ---
-title: Agentic Browser Automation Platform
-year: "2025"
-status: shipped
-bet: The browser is the next runtime for AI — agents will use the web the way people do.
-outcome: A CrewAI multi-agent pipeline (Gemini 2.0 + GPT-4o via LangChain) that autonomously crawls career portals with Playwright, takes real actions through MCP, and asks a human before any low-confidence move — 85% task completion.
+title: Agents & Local AI
+year: "2025 — now"
+status: exploring
+tier: bet
+bet: The next runtime for AI isn't just the datacenter — it's your browser and your own device.
+outcome: An open-ended exploration, not a single project. First artifact — a CrewAI multi-agent platform (Gemini 2.0 + GPT-4o) that crawls career portals with Playwright, acts through MCP, and hands low-confidence decisions back to a human; 85% task completion. More artifacts in progress.
 stack: [CrewAI, LangChain, MCP, Playwright, browser-use]
 links: []
 featured: true

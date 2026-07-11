@@ -4,15 +4,15 @@ import { site } from '../data/site';
 import { url } from '../lib/utils';
 
 export async function GET(context) {
-  const notebook = await getCollection('notebook', ({ data }) => !data.draft);
+  const unfinished = await getCollection('unfinished', ({ data }) => !data.draft);
   const essays = await getCollection('essays', ({ data }) => !data.draft);
 
   const items = [
-    ...notebook.map((e) => ({
+    ...unfinished.map((e) => ({
       title: e.data.title,
       pubDate: e.data.date,
       description: e.data.summary,
-      link: url(`/notebook/${e.id}/`),
+      link: url(`/unfinished/${e.id}/`),
     })),
     ...essays.map((e) => ({
       title: e.data.title,

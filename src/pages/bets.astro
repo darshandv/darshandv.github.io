@@ -4,32 +4,45 @@ import Base from '../layouts/Base.astro';
 import BetCard from '../components/BetCard.astro';
 
 const all = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
-const active = all.filter((p) => p.data.status !== 'archived');
+const liveBets = all.filter((p) => p.data.tier === 'bet' && p.data.status !== 'archived');
+const workshop = all.filter((p) => p.data.tier === 'workshop' && p.data.status !== 'archived');
 const archived = all.filter((p) => p.data.status === 'archived');
 ---
 
 <Base
   title="Bets"
-  description="Side projects as bets on where computing is going — AI agents, networks built from scratch, published research."
+  description="Wagers on where computing is going — agents and local AI today — plus the workshop of builds that sharpened the craft."
 >
   <div class="container">
     <header class="page-head">
-      <p class="meta">Projects, framed honestly</p>
+      <p class="meta">Wagers, held openly</p>
       <h1>Bets</h1>
       <p class="lede">
-        Side projects are how I place bets on where computing is going. Some become
-        software. Some become theses. All of them teach me something the day job can't.
+        Side projects are how I place bets on where computing is going. A bet is a
+        thesis held until the future proves it right or wrong; the workshop below it is
+        everything built along the way.
       </p>
     </header>
 
-    <div class="bet-grid">
-      {active.map((entry) => <BetCard entry={entry} />)}
-    </div>
+    <section class="tier">
+      <h2 class="meta tier-label">Live bets</h2>
+      <div class="bet-grid">
+        {liveBets.map((entry) => <BetCard entry={entry} />)}
+      </div>
+    </section>
+
+    <section class="tier workshop">
+      <h2 class="meta tier-label">The workshop</h2>
+      <p class="meta tier-note">builds that sharpened the craft</p>
+      <div class="bet-grid">
+        {workshop.map((entry) => <BetCard entry={entry} />)}
+      </div>
+    </section>
 
     {
       archived.length > 0 && (
-        <section class="archive">
-          <h2 class="meta head">Archive</h2>
+        <section class="tier workshop">
+          <h2 class="meta tier-label">Archive</h2>
           <div class="bet-grid">
             {archived.map((entry) => (
               <BetCard entry={entry} />
@@ -54,17 +67,25 @@ const archived = all.filter((p) => p.data.status === 'archived');
     font-size: 1.08rem;
     max-width: 58ch;
   }
+  .tier {
+    margin-bottom: 3.2rem;
+  }
+  .tier-label {
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+  .tier-note {
+    margin: -0.8rem 0 1.2rem;
+    text-transform: none;
+    letter-spacing: 0.04em;
+  }
+  .workshop {
+    padding-top: 2.4rem;
+    border-top: 1px solid var(--line);
+  }
   .bet-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
     gap: 1.2rem;
-  }
-  .archive {
-    margin-top: 3.5rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--line);
-  }
-  .archive .head {
-    margin-bottom: 1.2rem;
   }
 </style>

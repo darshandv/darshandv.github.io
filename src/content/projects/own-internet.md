@@ -2,10 +2,10 @@
 title: Building My Own Internet
 year: "2023"
 status: shipped
-bet: You don't understand a network until you've built one — protocol by protocol.
-outcome: A working miniature internet — OSPF and iBGP/eBGP routing via Quagga with policy-based routing, plus a custom TCP implementation with sliding windows, retransmission, and BBR congestion control.
+tier: workshop
+outcome: Built to answer one question — do I actually understand the internet? A working miniature one — OSPF and iBGP/eBGP routing via Quagga with policy-based routing, plus a custom TCP implementation with sliding windows, retransmission, and BBR congestion control.
 stack: [Quagga, BGP, OSPF, TCP, BBR]
 links: []
-featured: true
+featured: false
 order: 2
 ---

@@ -4,7 +4,7 @@ import Base from '../../layouts/Base.astro';
 import EntryRow from '../../components/EntryRow.astro';
 import { url } from '../../lib/utils';
 
-const entries = (await getCollection('notebook', ({ data }) => !data.draft)).sort(
+const entries = (await getCollection('unfinished', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
 
@@ -17,16 +17,17 @@ for (const e of entries) {
 ---
 
 <Base
-  title="Notebook"
-  description="A public notebook — technical deep dives, fragments, life notes, and links, in the order they were thought."
+  title="Unfinished"
+  description="Thinking published before it's finished — deep dives, fragments, life, links. The original thought is always mine; polish is optional. Half-thoughts compound."
 >
   <div class="container">
     <header class="page-head">
-      <p class="meta">The public mind</p>
-      <h1>Notebook</h1>
+      <p class="meta">The inner track</p>
+      <h1>Unfinished</h1>
       <p class="lede">
-        Deep dives, fragments, life, links — in the order I think them. Unpolished on
-        purpose.
+        Thinking, published before it's finished — deep dives, fragments, life, links.
+        The original thought is always mine; polish is optional and often absent.
+        Half-thoughts compound.
       </p>
     </header>
 
@@ -37,7 +38,7 @@ for (const e of entries) {
           <div class="rows">
             {list.map((entry) => (
               <EntryRow
-                href={url(`/notebook/${entry.id}/`)}
+                href={url(`/unfinished/${entry.id}/`)}
                 title={entry.data.title}
                 date={entry.data.date}
                 kind={entry.data.kind}

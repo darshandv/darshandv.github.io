@@ -17,7 +17,7 @@ npm run build    # static build → dist/
 
 | I want to…            | Do this |
 |-----------------------|---------|
-| Post a notebook entry | copy `templates/notebook-entry.md` → `src/content/notebook/YYYY-MM-DD-slug.md` |
+| Post an unfinished entry | copy `templates/unfinished-entry.md` → `src/content/unfinished/YYYY-MM-DD-slug.md` |
 | Publish an essay      | copy `templates/essay.md` → `src/content/essays/slug.md` |
 | Add a project/bet     | copy `templates/project.md` → `src/content/projects/slug.md` |
 | Add a role            | copy `templates/work.md` → `src/content/work/company.md` |
@@ -34,7 +34,7 @@ human contributor starts there; `CLAUDE.md` has the hard rules.
 
 ## Seeds to review (marked for Darshan)
 
-- `src/content/notebook/2026-07-11-why-this-notebook.md` — first entry, drafted
+- `src/content/unfinished/2026-07-11-why-unfinished.md` — first entry, drafted
   in your voice; edit or rewrite before/after launch.
 - `src/content/now/now.md` — seeded from the interview; make it true.
 - Deutsche Bank & Impel Labs entries carry facts from the old site with

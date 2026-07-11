@@ -227,7 +227,7 @@ main {
   white-space: nowrap;
 }
 
-/* hairline row lists (work, notebook) */
+/* hairline row lists (work, unfinished) */
 .rows {
   border-top: 1px solid var(--line);
 }

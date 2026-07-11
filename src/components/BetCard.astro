@@ -13,10 +13,14 @@ const { title, year, status, bet, outcome, stack, links } = entry.data;
     {year}<span class="sep">·</span>{status}
   </p>
   <h3>{title}</h3>
-  <p class="bet">
-    <span class="bet-label">The bet:</span>
-    {bet}
-  </p>
+  {
+    bet && (
+      <p class="bet">
+        <span class="bet-label">The bet:</span>
+        {bet}
+      </p>
+    )
+  }
   <p class="outcome">{outcome}</p>
   {
     stack.length > 0 && (
