@@ -9,5 +9,5 @@ highlights:
   - Architected a DevOps CI/CD platform used by ~2,000 people, with live data fetching at 0.2s.
 tags: [DevOps, CI/CD]
 featured: false
-note: dates approximate — carried over from the previous site
+note: dates approximate, carried over from the previous site
 ---

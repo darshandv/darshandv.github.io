@@ -1,5 +1,5 @@
 ---
-# Placeholder so the essays collection exists — invisible until draft: false.
+# Placeholder so the essays collection exists; invisible until draft: false.
 # When the first real essay is ready, rename this file and write it here.
 title: The first essay
 date: 2026-07-11

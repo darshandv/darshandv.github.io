@@ -8,5 +8,5 @@ draft: false # true = invisible until you're ready
 ---
 
 Write markdown here. Code blocks, images (put files in src/assets/unfinished/),
-lists, quotes — everything works. A fragment can be three sentences. That's the
+lists, quotes, everything works. A fragment can be three sentences. That's the
 point: the baseline thought, published before it's finished.
