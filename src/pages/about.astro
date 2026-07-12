@@ -1,7 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
 import NowReadout from '../components/NowReadout.astro';
-import { site } from '../data/site';
 
 const story = [
   `I grew up in Karnataka, India, and studied computer science at NIT Karnataka.
@@ -56,19 +55,6 @@ const story = [
     <section class="block">
       <h2 class="meta head">Now</h2>
       <NowReadout />
-    </section>
-
-    <section class="block">
-      <h2 class="meta head">Contact</h2>
-      <p>
-        The fastest way is email: <a href={`mailto:${site.email}`}>{site.email}</a>.
-        I'm also on
-        {site.socials.map((s, i) => (
-          <>
-            <a href={s.url} rel="me noopener">{s.label}</a>{i < site.socials.length - 1 ? ' and ' : '.'}
-          </>
-        ))}
-      </p>
     </section>
 
     <section class="block">
