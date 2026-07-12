@@ -3,7 +3,10 @@
 Personal site of Darshan D Vishwanath — *"I build systems from the silicon up."*
 
 Built with [Astro](https://astro.build), plain CSS, and markdown. No trackers,
-no UI frameworks, ~0 client JS. Deployed to GitHub Pages.
+no UI frameworks, ~0 client JS. This repo is the live site (a GitHub
+user-page repo); pushing to `main` deploys straight to
+[www.darshanvishwanath.com](https://www.darshanvishwanath.com). The previous
+template site is preserved on the `legacy-template-site` branch.
 
 ## Develop
 

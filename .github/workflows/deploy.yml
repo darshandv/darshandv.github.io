@@ -1,5 +1,6 @@
 # Deploys to GitHub Pages on push to main.
-# Domain cutover: change SITE_URL/BASE_PATH per SPEC/06-LAUNCH.md step 2.
+# This repo is the darshandv.github.io user-page repo: it serves the root of
+# the custom domain directly (see public/CNAME and SPEC/06-LAUNCH.md).
 name: Deploy to GitHub Pages
 
 on:
@@ -17,8 +18,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  SITE_URL: https://darshandv.github.io
-  BASE_PATH: /portfolio-page
+  SITE_URL: https://www.darshanvishwanath.com
+  BASE_PATH: /
 
 jobs:
   build:

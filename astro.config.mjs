@@ -1,10 +1,10 @@
-// Site/base are env-driven so the same build works on the temporary
-// GitHub Pages project URL and, later, on the custom domain (SPEC/06-LAUNCH.md).
+// This repo (darshandv.github.io) is a GitHub user-page repo: Pages serves it
+// from the root of the custom domain, so site/base default to that directly.
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-const SITE = process.env.SITE_URL ?? 'https://darshandv.github.io';
-const BASE = process.env.BASE_PATH ?? '/portfolio-page';
+const SITE = process.env.SITE_URL ?? 'https://www.darshanvishwanath.com';
+const BASE = process.env.BASE_PATH ?? '/';
 
 export default defineConfig({
   site: SITE,
