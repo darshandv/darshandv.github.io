@@ -27,18 +27,3 @@ npm run build    # static build → dist/
 | Update "Now"          | edit `src/content/now/now.md`, bump `updated` |
 
 Commit + push to `main` → the site deploys itself.
-
-## The system
-
-The full design/content/build system lives in [`SPEC/`](./SPEC) — vision,
-design tokens, schemas, page blueprints, voice rules, and the launch runbook
-(including moving `www.darshanvishwanath.com` from the old site). Any AI or
-human contributor starts there; `CLAUDE.md` has the hard rules.
-
-## Seeds to review (marked for Darshan)
-
-- `src/content/unfinished/2026-07-11-why-unfinished.md` — first entry, drafted
-  in your voice; edit or rewrite before/after launch.
-- `src/content/now/now.md` — seeded from the interview; make it true.
-- Deutsche Bank & Impel Labs entries carry facts from the old site with
-  unverified dates — see the facts ledger in `SPEC/02`.
