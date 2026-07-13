@@ -3,7 +3,7 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-const SITE = process.env.SITE_URL ?? 'https://www.darshanvishwanath.com';
+const SITE = process.env.SITE_URL ?? 'https://darshanvishwanath.com';
 const BASE = process.env.BASE_PATH ?? '/';
 
 export default defineConfig({
