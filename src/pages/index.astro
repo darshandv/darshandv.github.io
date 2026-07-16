@@ -33,11 +33,11 @@ const latestEssay = essays[0];
       <p class="meta kicker fade-up">{site.name}</p>
       <h1 class="fade-up d1">{site.identity}</h1>
       <p class="lede fade-up d2">
-        Sub-millisecond camera kernels running on millions of Galaxy phones. Retail
-        systems at Apple serving customers in every country, where peaks, availability,
-        and reliability are the physics. Bets on agents and local AI. I work where
-        software meets its limits, at both ends. This site is the record of that work,
-        and of the thinking behind it.
+        At Apple, that means the retail systems behind every Apple Store worldwide,
+        where peaks, availability, and reliability are the physics. It started at the
+        opposite limit, sub-millisecond camera kernels running on millions of Galaxy
+        phones. On my own time I place bets on agents and local AI. This site is the
+        record of that work, and of the thinking behind it.
       </p>
       <p class="meta status fade-up d3">{site.statusLine}</p>
     </div>
@@ -93,7 +93,18 @@ const latestEssay = essays[0];
 
 <style>
   .hero {
+    position: relative;
+    z-index: 0;
     padding-block: clamp(4rem, 12vh, 8rem) clamp(2rem, 5vh, 3rem);
+  }
+  /* Grid backdrop lives on a pseudo-element so the fade mask never
+     touches the hero text — only the grid fades out. */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
     background-image:
       linear-gradient(var(--line-faint) 1px, transparent 1px),
       linear-gradient(90deg, var(--line-faint) 1px, transparent 1px);
@@ -118,6 +129,7 @@ const latestEssay = essays[0];
   }
   .status {
     color: var(--ink-2);
+    margin-top: 3.4rem;
   }
   .rows-top {
     border-top: 1px solid var(--line);
