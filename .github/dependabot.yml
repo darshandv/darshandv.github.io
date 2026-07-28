@@ -8,8 +8,11 @@ updates:
     schedule:
       interval: weekly
       day: monday
-      time: "06:00"
-      timezone: Europe/London
+      # Dependabot honours a timezone, so unlike the Actions cron in
+      # audit.yml this tracks daylight saving on its own and stays at 14:00
+      # local year round.
+      time: "14:00"
+      timezone: America/Chicago
     open-pull-requests-limit: 10
     labels:
       - dependencies
@@ -32,8 +35,11 @@ updates:
     schedule:
       interval: weekly
       day: monday
-      time: "06:00"
-      timezone: Europe/London
+      # Dependabot honours a timezone, so unlike the Actions cron in
+      # audit.yml this tracks daylight saving on its own and stays at 14:00
+      # local year round.
+      time: "14:00"
+      timezone: America/Chicago
     labels:
       - dependencies
     groups:
