@@ -4,9 +4,9 @@
 # This is the other half: it catches advisories on code nobody is touching,
 # and stops a PR from merging a vulnerable lockfile.
 #
-# The daily schedule matters more than it looks — an advisory published
-# against an unchanged lockfile produces no commit and no PR, so without a
-# cron nothing would ever run to notice it.
+# The schedule matters more than it looks — an advisory published against an
+# unchanged lockfile produces no commit and no PR, so without a cron nothing
+# would ever run to notice it. Weekly, matching the Dependabot cadence.
 name: Audit
 
 on:
@@ -14,7 +14,9 @@ on:
     branches: [main]
   pull_request:
   schedule:
-    - cron: "0 6 * * *"
+    # Mondays at 06:00 UTC. Actions cron is always UTC, so this lands
+    # alongside the Dependabot sweep configured in dependabot.yml.
+    - cron: "0 6 * * 1"
   workflow_dispatch:
 
 permissions:
