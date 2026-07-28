@@ -14,9 +14,13 @@ on:
     branches: [main]
   pull_request:
   schedule:
-    # Mondays at 06:00 UTC. Actions cron is always UTC, so this lands
-    # alongside the Dependabot sweep configured in dependabot.yml.
-    - cron: "0 6 * * 1"
+    # Mondays at 14:00 US Central, so the run lands during the working day.
+    #
+    # Actions cron is UTC only and does not follow daylight saving, so this
+    # is pinned to 19:00 UTC = 14:00 CDT. From November to March, when
+    # Central is on CST, it arrives at 13:00 local instead. To hold 14:00
+    # through the winter, change this to "0 20 * * 1".
+    - cron: "0 19 * * 1"
   workflow_dispatch:
 
 permissions:
