@@ -1,0 +1,66 @@
+# Dependency audit gate.
+#
+# Dependabot opens PRs when an advisory lands against a package we depend on.
+# This is the other half: it catches advisories on code nobody is touching,
+# and stops a PR from merging a vulnerable lockfile.
+#
+# The daily schedule matters more than it looks — an advisory published
+# against an unchanged lockfile produces no commit and no PR, so without a
+# cron nothing would ever run to notice it.
+name: Audit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # Fails the job on high and critical advisories. These are the ones
+      # worth blocking a merge over.
+      - name: Audit (high and critical block)
+        run: npm audit --audit-level=high
+
+      # Moderate and low are reported, not enforced: an unfixable moderate
+      # should not be able to wedge the repo. It still shows up in the job
+      # summary so it gets triaged rather than silently accumulating.
+      - name: Report moderate and low
+        if: always()
+        run: |
+          {
+            echo "### npm audit"
+            echo
+            echo '```'
+            npm audit --audit-level=low || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  # The deploy workflow already builds, but only on main. This proves a
+  # dependency bump still builds before it is merged.
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+        env:
+          SITE_URL: https://darshanvishwanath.com
+          BASE_PATH: /

@@ -1,0 +1,42 @@
+# Keeps dependencies patched without waiting for someone to notice.
+# Two ecosystems matter here: the npm tree that builds the site, and the
+# GitHub Actions that deploy it.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Europe/London
+    open-pull-requests-limit: 10
+    labels:
+      - dependencies
+    # Astro pulls most of the build chain (vite, sharp, svgo, postcss) as
+    # transitives; grouping keeps one PR per weekly sweep instead of six.
+    groups:
+      astro:
+        patterns:
+          - astro
+          - "@astrojs/*"
+      dev-chain:
+        patterns:
+          - "*"
+        exclude-patterns:
+          - astro
+          - "@astrojs/*"
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Europe/London
+    labels:
+      - dependencies
+    groups:
+      actions:
+        patterns:
+          - "*"
