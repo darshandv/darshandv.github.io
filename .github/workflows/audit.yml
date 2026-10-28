@@ -1,8 +1,9 @@
 # Dependency audit gate.
 #
-# Dependabot opens PRs when an advisory lands against a package we depend on.
-# This is the other half: it catches advisories on code nobody is touching,
-# and stops a PR from merging a vulnerable lockfile.
+# Dependabot opens PRs when updates land for a package we depend on. It runs
+# in the public repo only; the private repo shares the same lockfile and
+# mirrors its fixes. This workflow is the other half: it catches advisories on
+# code nobody is touching, and stops a PR from merging a vulnerable lockfile.
 #
 # The schedule matters more than it looks — an advisory published against an
 # unchanged lockfile produces no commit and no PR, so without a cron nothing
