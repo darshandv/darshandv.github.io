@@ -55,8 +55,8 @@ jobs:
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
-  # The deploy workflow already builds, but only on main. This proves a
-  # dependency bump still builds before it is merged.
+  # Runs on every pull request, so a dependency bump is proven to build
+  # before it is merged rather than after it lands on main.
   build:
     runs-on: ubuntu-latest
     steps:
